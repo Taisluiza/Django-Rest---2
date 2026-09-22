@@ -3,6 +3,8 @@ from escola.serializers import EstudanteSerializer, CursoSerializer, MatriculaSe
 from rest_framework import viewsets, generics
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.throttling import UserRateThrottle
+from escola.throttles import MatriculaAnonRateThrottle
 
 
 class EstudanteViewSet(viewsets.ModelViewSet):
@@ -15,10 +17,12 @@ class CursoViewSet(viewsets.ModelViewSet):
     queryset = Curso.objects.all().order_by("id")
     serializer_class = CursoSerializer
 
+    
 class MatriculaViewSet(viewsets.ModelViewSet):
     
     queryset = Matricula.objects.all().order_by("id")
     serializer_class = MatriculaSerializer
+    throttle_classes = [UserRateThrottle, MatriculaAnonRateThrottle]
 
 
 # PARA SELECIONAR APENAS UMA MATRICA DE UM ESTUDANTE
