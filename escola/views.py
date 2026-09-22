@@ -23,6 +23,9 @@ class MatriculaViewSet(viewsets.ModelViewSet):
     queryset = Matricula.objects.all().order_by("id")
     serializer_class = MatriculaSerializer
     throttle_classes = [UserRateThrottle, MatriculaAnonRateThrottle]
+    http_method_names = ["get", "post"]
+
+
 
 
 # PARA SELECIONAR APENAS UMA MATRICA DE UM ESTUDANTE
